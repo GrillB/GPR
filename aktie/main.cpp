@@ -3,6 +3,16 @@
 #include <string>
 using namespace std;
 
+unsigned int hashd(const char* s, unsigned int seed = 0)
+{
+    unsigned int hashs = seed;
+    while (*s)
+    {
+        hashs = hashs * 101  +  *s++;
+    }
+    return hashs;
+}
+
 
 
 int main()
@@ -18,6 +28,9 @@ int main()
 
     }
     f.close();
+    cout<<hashd("Google",0)%1039;
     //Hallo
     return 0;
 }
+
+
