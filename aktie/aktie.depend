@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1459336268 source:c:\users\karakaya\desktop\schule\gpr2\aktie\aktie.cpp
+
+1460039361 source:c:\users\karakaya\desktop\schule\gpr2\aktie\main.cpp
+	<iostream>
+	<fstream>
+

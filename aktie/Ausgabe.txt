@@ -1,0 +1,12 @@
+﻿Willkommen zur Aktienverwaltungssystem
+Das Programm wird über folgende Menüpunkte gesteuert:
+ADD: 	Eine Aktie mit Namen und Kürzel wird hinzugefügt.
+DEL: 	Aktie wird gelöscht.
+IMPORT: Kurswerte für eine Aktie werden aus einer csv Datei importiert
+SEARCH: Eine Aktie wird in der Hashtabelle gesucht (Eingabe von Namen
+	oder Kürzel) und der aktuellste Kurseintrag
+PLOT: 	Die Schlusskurse der letzten 30 Tage einer Aktie werden als ASCII
+	Grafik ausgegeben, Format ist frei wählbar.
+SAVE <filename>: Programm speichert die Hashtabelle in eine Datei ab
+LOAD <filename>: Programm lädt die Hashtabelle aus einer Datei
+QUIT:	Programm wird beendet 
