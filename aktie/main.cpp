@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "aktie.h"
+
 using namespace std;
 
 unsigned int hashd(const char* s, unsigned int seed = 0)
@@ -13,23 +15,38 @@ unsigned int hashd(const char* s, unsigned int seed = 0)
     return hashs;
 }
 
+void add(string s, string kurz){
 
-
-int main()
-{
     ifstream f;  // Datei-Handle
-    string s;int laenge=1;
+    //string s;
+    int laenge=1;
     f.open("msft.csv", ios::in); // Öffne Datei aus Parameter
     while (!f.eof()&&laenge<31)          // Solange noch Daten vorliegen
     {
         getline(f, s);     // Lese eine Zeile
         cout << s << endl;    // Zeige sie auf dem Bildschirm
         laenge++;
-
     }
     f.close();
-    cout<<hashd("Google",0)%1039;
-    //Hallo
+    cout<<hashd("Google",0)%1039<<endl;
+}
+
+int main()
+{
+    string eingabe="";
+    string name, kurz;
+
+    cout<<"What do you want to do?"<<endl;
+    while(eingabe != "QUIT"){
+        cin>>eingabe;
+        cin>>name;
+        cin>>kurz;
+        if(eingabe == "ADD")
+            add(name, kurz);
+
+        //Hallo
+        cin>>eingabe;
+    }
     return 0;
 }
 

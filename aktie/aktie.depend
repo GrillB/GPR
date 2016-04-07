@@ -5,10 +5,18 @@
 	<iostream>
 	<fstream>
 
-1460042562 source:c:\users\billy\google drive\fh technikum wien\2. semester\algorithmen und datenstrukturen\hash\gpr\aktie\main.cpp
+1460046712 source:c:\users\billy\google drive\fh technikum wien\2. semester\algorithmen und datenstrukturen\hash\gpr\aktie\main.cpp
 	<iostream>
 	<fstream>
 	<string>
+	"aktie.h"
 
-1460041383 source:c:\users\billy\google drive\fh technikum wien\2. semester\algorithmen und datenstrukturen\hash\gpr\aktie\aktie.cpp
+1460046641 source:c:\users\billy\google drive\fh technikum wien\2. semester\algorithmen und datenstrukturen\hash\gpr\aktie\aktie.cpp
+	<stdio.h>
+	<cstdlib>
+	<string>
+	<iostream>
+	"aktie.h"
+
+1460046662 c:\users\billy\google drive\fh technikum wien\2. semester\algorithmen und datenstrukturen\hash\gpr\aktie\aktie.h
 
