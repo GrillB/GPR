@@ -28,7 +28,7 @@ int main()
 
     }
     f.close();
-    cout<<hashd("Google",0)%1039;
+    cout<<hashd("Google",0)%1499;
     //Hallo
     return 0;
 }
