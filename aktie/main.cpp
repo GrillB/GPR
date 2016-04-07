@@ -15,12 +15,17 @@ unsigned int hashd(const char* s, unsigned int seed = 0)
     return hashs;
 }
 
-void add(string s, string kurz){
+void add()
+{
+
+}
+
+void import(string s, string kurz){
 
     ifstream f;  // Datei-Handle
     //string s;
     int laenge=1;
-    f.open("msft.csv", ios::in); // �ffne Datei aus Parameter
+    f.open("msft.csv", ios::in); // Öffne Datei aus Parameter
     while (!f.eof()&&laenge<31)          // Solange noch Daten vorliegen
     {
         getline(f, s);     // Lese eine Zeile
@@ -28,11 +33,9 @@ void add(string s, string kurz){
         laenge++;
     }
     f.close();
-<<<<<<< HEAD
-    cout<<hashd("Google",0)%1499;
-    //Hallo
-=======
-    cout<<hashd("Google",0)%1039<<endl;
+
+
+    cout<<hashd("Google",0)%1499<<endl;
 }
 
 int main()
@@ -40,18 +43,25 @@ int main()
     string eingabe="";
     string name, kurz;
 
-    cout<<"What do you want to do?"<<endl;
-    while(eingabe != "QUIT"){
-        cin>>eingabe;
-        cin>>name;
-        cin>>kurz;
-        if(eingabe == "ADD")
-            add(name, kurz);
 
-        //Hallo
+    do{
+
+
+
+        if(eingabe == "add"){
+            cout<<"Name: ";
+            cin>>name;
+            cout<<"Kürzel: ";
+            cin>>kurz;
+
+        }
+        if(eingabe =="import")
+        {
+            import("");
+        }
+        cout<<"What do you want to do?"<<endl;
         cin>>eingabe;
-    }
->>>>>>> origin/master
+    }while(eingabe != "QUIT");
     return 0;
 }
 

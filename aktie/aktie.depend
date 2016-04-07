@@ -5,10 +5,17 @@
 	<iostream>
 	<fstream>
 
-1459336268 source:c:\users\karakaya\desktop\schule\gpr2\gpr\aktie\aktie.cpp
+1460049011 source:c:\users\karakaya\desktop\schule\gpr2\gpr\aktie\aktie.cpp
+	<stdio.h>
+	<cstdlib>
+	<string>
+	<iostream>
+	"aktie.h"
 
 1460043383 source:c:\users\karakaya\desktop\schule\gpr2\gpr\aktie\main.cpp
 	<iostream>
 	<fstream>
 	<string>
+
+1460049011 c:\users\karakaya\desktop\schule\gpr2\gpr\aktie\aktie.h
 
