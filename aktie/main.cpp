@@ -59,6 +59,7 @@ void saveHash()
 {
     fstream f("hash.txt", ios::out);
     int i=0;
+<<<<<<< HEAD
     string s;
     while(i<1499)
     {
@@ -66,6 +67,15 @@ void saveHash()
         f<<i<<","<< aname[i] <<","<< akuerz[i]<<endl;
         i++;
     }
+=======
+
+        while(i<1499
+              )
+        {
+            f<<i<<","<< aname[i] <<","<< akuerz[i]<<endl;
+            i++;
+        }
+>>>>>>> origin/master
 
     f.close();
 }
@@ -88,6 +98,40 @@ void import(string s, string kurz)
 
 }
 
+void search(string eingabe){
+    size_t found, found2;
+    for(int i = 0; i<1499; i++){
+        found = aname[i].find(eingabe);
+        found2 = akuerz[i].find(eingabe);
+        if(found != -1){
+            cout<< "Name gefunden"<<endl;
+            cout<< i <<endl;
+        }
+        if(found2 != -1){
+            cout<< "Kuerzel gefunden"<<endl;
+            cout<< i <<endl;
+        }
+    }
+}
+void deletefunc(string eingabe){
+    size_t found, found2;
+    for(int i = 0; i<1499; i++){
+        found = aname[i].find(eingabe);
+        found2 = akuerz[i].find(eingabe);
+        if(found != -1){
+            cout<< "Name gefunden"<<endl;
+            cout<< i <<endl;
+            cout<< aname[i] << "wird gelöscht" <<endl;
+            aname[i] = "NULL";
+        }
+        if(found2 != -1){
+            cout<< "Kuerzel gefunden"<<endl;
+            cout<< i <<endl;
+            cout<< akuerz[i] << "wird gelöscht" <<endl;
+            akuerz[i] = "NULL";
+        }
+    }
+}
 int main()
 {
     loadHash();
@@ -108,9 +152,17 @@ int main()
             cin>>kurz;
             add(name,kurz);
         }
-        if(eingabe =="import")
+        if(eingabe =="search")
         {
-
+            cout<<"Was suchen Sie?"<<endl;
+            cin>>eingabe;
+            search(eingabe);
+        }
+        if(eingabe =="delete")
+        {
+            cout<<"Was möchten Sie löschen?"<<endl;
+            cin>>eingabe;
+            deletefunc(eingabe);
         }
         cout<<"What do you want to do?"<<endl;
         cin>>eingabe;
