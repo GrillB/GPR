@@ -1,12 +1,13 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include "aktie.h"
 
 using namespace std;
 
-string aname[1499]="0";
-string akuerz[1499]="0";
+string aname[1499]="NULL";
+string akuerz[1499]="NULL";
 int gr=0;
 unsigned int hashd(const char* s)
 {
@@ -28,30 +29,43 @@ void add(string name, string kuerz)
 
 }
 
-//void loadHash()
-//{
-//    fstream f;
-//    f.open("hash.txt", ios::out);
-//    int i;
-//    while(i<1500)
-//    {
-//
-//        f <<i<<","<< aname[i] <<","<< akuerz[i]<<endl;
-//        i++;
-//    }
-//    f.close();
-//}
+void loadHash()
+{
+    ifstream f;  // Datei-Handle
+    //string s;
+    int i=0;
+    string s;
+     size_t pos,pos1;
+    f.open("hash.txt", ios::in); // Öffne Datei aus Parameter
+    while (!f.eof())          // Solange noch Daten vorliegen
+    {
+        getline(f, s);     // Lese eine Zeile
+
+        pos=s.find(",");
+        //string to integger
+        istringstream(s.substr(0,pos))>>i;
+        cout<<i;
+        pos1=s.find(",",pos+1);
+        aname[i]=s.substr(pos+1,(pos1-pos-1));
+        cout<<aname[i];
+        akuerz[i]=s.substr(pos1+1);
+        cout<<akuerz[i]<<endl;
+
+    }
+    f.close();
+}
 
 void saveHash()
 {
     fstream f("hash.txt", ios::out);
     int i=0;
-
-        while(i<1500)
-        {
-            f<<i<<","<< aname[i] <<","<< akuerz[i]<<endl;
-            i++;
-        }
+    string s;
+    while(i<1499)
+    {
+        if(aname[i]!="NULL"||akuerz[i]!="NULL")
+        f<<i<<","<< aname[i] <<","<< akuerz[i]<<endl;
+        i++;
+    }
 
     f.close();
 }
@@ -72,11 +86,11 @@ void import(string s, string kurz)
     f.close();
 
 
-    cout<<hashd("Google")%1499<<endl;
 }
 
 int main()
 {
+    loadHash();
     string eingabe="";
     string name, kurz;
 
