@@ -12,10 +12,11 @@
 	<iostream>
 	"aktie.h"
 
-1460043383 source:c:\users\karakaya\desktop\schule\gpr2\gpr\aktie\main.cpp
+1460055648 source:c:\users\karakaya\desktop\schule\gpr2\gpr\aktie\main.cpp
 	<iostream>
 	<fstream>
 	<string>
+	"aktie.h"
 
 1460049011 c:\users\karakaya\desktop\schule\gpr2\gpr\aktie\aktie.h
 
