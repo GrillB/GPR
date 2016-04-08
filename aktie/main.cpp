@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -45,11 +45,7 @@ void add(string name, string kuerz,string aname[],string akuerz[])
     int hkuerz=hashd(kuerz.c_str())%1499;
     aname[recHashname(hname,aname)]=name;
     akuerz[recHashkuerz(hkuerz,akuerz)]=kuerz;
-
-
-
 }
-
 
 void loadHash(string aname[],string akuerz[])
 {
@@ -112,6 +108,36 @@ void import(string s, string kurz)
 
 void search(string eingabe,string aname[],string akuerz[])
 {
+    int hname=hashd(eingabe.c_str())%1499;
+    int hkuerz=hashd(eingabe.c_str())%1499;
+    string werte="";
+
+    if(aname[hname] == eingabe){
+        cout<< "TEst"<<endl;
+    }else{
+        while(aname[hname] != eingabe){
+            werte += hname + ",";
+            hname = (hname*hname) % 1499;
+            if(werte.find(hname) != -1){
+                break;
+            }
+        }
+    }
+    if(akuerz[hkuerz] == eingabe){
+        cout<< "TEst"<<endl;
+    }else{
+        while(akuerz[hkuerz] != eingabe){
+            werte += hkuerz + ",";
+            hkuerz = (hkuerz*hkuerz) % 1499;
+            if(werte.find(hkuerz) != -1){
+                break;
+            }
+        }
+    }
+}
+/*
+void search(string eingabe,string aname[],string akuerz[])
+{
     size_t found, found2;
     for(int i = 0; i<1499; i++)
     {
@@ -129,6 +155,7 @@ void search(string eingabe,string aname[],string akuerz[])
         }
     }
 }
+*/
 void deletefunc(string eingabe,string aname[],string akuerz[])
 {
     size_t found, found2;
@@ -180,6 +207,7 @@ int main()
             cout<<"Was suchen Sie?"<<endl;
             cin>>eingabe;
             search(eingabe,aname,akuerz);
+            //search(eingabe)
         }
         if(eingabe =="delete")
         {
