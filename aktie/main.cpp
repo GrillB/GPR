@@ -17,15 +17,39 @@ unsigned int hashd(const char* s)
     }
     return hashs;
 }
-void add(string name, string kuerz,string aname[],string akuerz[])
+
+int recHashname(int hashw,string aname[])
 {
 
-    aname[hashd(name.c_str())%1499]=name;
-    akuerz[hashd(kuerz.c_str())%1499]=kuerz;
-    cout<< aname[hashd(name.c_str())%1499]<<endl;
-    cout<<akuerz[hashd(kuerz.c_str())%1499]<<endl;
+      if(aname[hashw]!="NULL")
+    {
+        hashw=(hashw*hashw)%1499;
+        hashw=recHashname(hashw,aname);
+    }
+    return hashw;
+}
+
+int recHashkuerz(int hashw,string akuerz[])
+{
+    if(akuerz[hashw]!="NULL")
+    {
+        hashw=(hashw*hashw)%1499;
+        hashw=recHashkuerz(hashw,akuerz);
+    }
+    return hashw;
+}
+
+void add(string name, string kuerz,string aname[],string akuerz[])
+{
+    int hname=hashd(name.c_str())%1499;
+    int hkuerz=hashd(kuerz.c_str())%1499;
+    aname[recHashname(hname,aname)]=name;
+    akuerz[recHashkuerz(hkuerz,akuerz)]=kuerz;
+
+
 
 }
+
 
 void loadHash(string aname[],string akuerz[])
 {
