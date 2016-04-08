@@ -44,12 +44,12 @@ void loadHash()
         pos=s.find(",");
         //string to integger
         istringstream(s.substr(0,pos))>>i;
-        cout<<i;
+
         pos1=s.find(",",pos+1);
         aname[i]=s.substr(pos+1,(pos1-pos-1));
-        cout<<aname[i];
+
         akuerz[i]=s.substr(pos1+1);
-        cout<<akuerz[i]<<endl;
+
 
     }
     f.close();
@@ -59,7 +59,6 @@ void saveHash()
 {
     fstream f("hash.txt", ios::out);
     int i=0;
-<<<<<<< HEAD
     string s;
     while(i<1499)
     {
@@ -67,16 +66,6 @@ void saveHash()
         f<<i<<","<< aname[i] <<","<< akuerz[i]<<endl;
         i++;
     }
-=======
-
-        while(i<1499
-              )
-        {
-            f<<i<<","<< aname[i] <<","<< akuerz[i]<<endl;
-            i++;
-        }
->>>>>>> origin/master
-
     f.close();
 }
 
