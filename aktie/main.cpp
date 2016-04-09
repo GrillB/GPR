@@ -191,24 +191,35 @@ int search(string eingabe,aktie aname[],aktie akuerz[])
     return 0;
 }
 
-void deletefunc(string eingabe,string aname[],string akuerz[])
+void deletefunc(string eingabe,aktie aname[],aktie akuerz[])
 {
-//    size_t found, found2;
-//    int hashw= search(eingabe, aname, akuerz);
-//    if(hashw){
-//
-//
-//            cout<< "Name gefunden"<<endl;
-//            cout<< hashw <<endl;
-//            cout<< aname[i] << "wird gelöscht" <<endl;
-//            aname[i] = "NULL";
-//
-//            cout<< "Kuerzel gefunden"<<endl;
-//            cout<< i <<endl;
-//            cout<< akuerz[i] << "wird gelöscht" <<endl;
-//            akuerz[i] = "NULL";
-//
-//    }
+    int x;
+    x = search(eingabe, aname, akuerz);
+    int y;
+    string s;
+    if(aname[x].name == eingabe){
+        s = aname[x].kuerz;
+        y = hashd(s.c_str())%1499;
+        //cout<<y<<endl;
+        if(akuerz[y].name == eingabe){
+            aname[x].name = "";
+            aname[x].kuerz = "";
+            akuerz[y].name = "";
+            akuerz[y].kuerz = "";
+        }
+
+    }
+    if(akuerz[x].kuerz == eingabe){
+        s = akuerz[x].name;
+        y = hashd(s.c_str())%1499;
+        //cout<<y<<endl;
+        if(aname[y].kuerz == eingabe){
+            aname[x].name = "";
+            aname[x].kuerz = "";
+            akuerz[y].name = "";
+            akuerz[y].kuerz = "";
+        }
+    }
 }
 void showData(string eingabe,aktie aname[],aktie akuerz[])
 {
