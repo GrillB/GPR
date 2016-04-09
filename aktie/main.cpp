@@ -23,10 +23,10 @@ unsigned int hashd(const char* s)
     return hashs;
 }
 
-int recHashname(int hashw,string aname[])
+int recHashname(int hashw,aktie aname[])
 {
 
-      if(aname[hashw]!="NULL")
+      if(aname[hashw].name!="")
     {
         hashw=(hashw*hashw)%1499;
         hashw=recHashname(hashw,aname);
@@ -34,9 +34,9 @@ int recHashname(int hashw,string aname[])
     return hashw;
 }
 
-int recHashkuerz(int hashw,string akuerz[])
+int recHashkuerz(int hashw,aktie akuerz[])
 {
-    if(akuerz[hashw]!="NULL")
+    if(akuerz[hashw].kuerz!="")
     {
         hashw=(hashw*hashw)%1499;
         hashw=recHashkuerz(hashw,akuerz);
@@ -44,15 +44,23 @@ int recHashkuerz(int hashw,string akuerz[])
     return hashw;
 }
 
-void add(string name, string kuerz,string aname[],string akuerz[])
+void add(string name, string kuerz,aktie aname[],aktie akuerz[])
 {
     int hname=hashd(name.c_str())%1499;
     int hkuerz=hashd(kuerz.c_str())%1499;
-    aname[recHashname(hname,aname)]=name;
-    akuerz[recHashkuerz(hkuerz,akuerz)]=kuerz;
+cout<<"1"<<endl;
+    hname=recHashname(hname,aname);
+    hkuerz=recHashkuerz(hkuerz,akuerz);
+cout<<"2"<<endl;
+    aname[hname].name=name;
+    akuerz[hkuerz].kuerz=kuerz;
+cout<<"3"<<endl;
+    aname[hname].kuerz=akuerz[hkuerz].kuerz;
+    akuerz[hkuerz].name=aname[hname].name;
+cout<<"4"<<endl;
 }
 
-void loadHash(string eingabe,string aname[],string akuerz[])
+void loadHash(string eingabe,aktie aname[],aktie akuerz[])
 {
     ifstream f;  // Datei-Handle
     //string s;
@@ -76,11 +84,12 @@ void loadHash(string eingabe,string aname[],string akuerz[])
             getline(ss,cc,',');
             istringstream(cc)>>i;
             getline(ss,cc,',');
-            aname[i]=cc;
+            aname[i].name=cc;
             getline(ss,cc,',');
-            akuerz[i]=cc;
-
-
+            akuerz[i].kuerz=cc;
+            aname[i].kuerz=akuerz[i].kuerz;
+            akuerz[i].name=aname[i].name;
+            cout<<aname[i].name<<","<<aname[i].kuerz<<endl;
 
         }
     }
@@ -91,15 +100,17 @@ void loadHash(string eingabe,string aname[],string akuerz[])
     f.close();
 }
 
-void saveHash(string eingabe,string aname[],string akuerz[])
+void saveHash(string eingabe,aktie aname[],aktie akuerz[])
 {
     fstream f(eingabe+".txt", ios::out);
     int i=0;
-    string s;
+
     while(i<1499)
     {
-        if(aname[i]!="NULL"||akuerz[i]!="NULL")
-            f<<i<<","<< aname[i] <<","<< akuerz[i]<<endl;
+        if(aname[i].name!=""||akuerz[i].kuerz!=""){
+            f<<i<<","<< aname[i].name <<","<< akuerz[i].kuerz<<endl;
+            cout<<i<<","<<aname[i].name<<","<<akuerz[i].kuerz<<endl;
+        }
         i++;
     }
     f.close();
@@ -121,7 +132,7 @@ void import(string eingabe,string kurz)
     f.close();
 }
 
-int search(string eingabe,string aname[],string akuerz[])
+int search(string eingabe,aktie aname[],aktie akuerz[])
 {
     int hname=hashd(eingabe.c_str())%1499;
     int hkuerz=hashd(eingabe.c_str())%1499;
@@ -129,10 +140,10 @@ int search(string eingabe,string aname[],string akuerz[])
 
     //string werte="";
 
-    if(aname[hname] == eingabe){
+    if(aname[hname].name == eingabe){
         return 1;
     }else{
-        while(aname[hname] != eingabe){
+        while(aname[hname].name != eingabe){
          //   werte += hname + ",";
             werte[hname]=1;
             hname = (hname*hname) % 1499;
@@ -142,10 +153,10 @@ int search(string eingabe,string aname[],string akuerz[])
             }
         }
     }
-    if(akuerz[hkuerz] == eingabe){
+    if(akuerz[hkuerz].kuerz == eingabe){
         return 1;
     }else{
-        while(akuerz[hkuerz] != eingabe){
+        while(akuerz[hkuerz].kuerz != eingabe){
            // werte += hkuerz + ",";
            werte[hkuerz]=1;
             hkuerz = (hkuerz*hkuerz) % 1499;
@@ -180,8 +191,11 @@ void deletefunc(string eingabe,string aname[],string akuerz[])
 }
 int main()
 {
-    string aname[1499]="NULL";
-    string akuerz[1499]="NULL";
+//    string aname[1499]="NULL";
+//    string akuerz[1499]="NULL";
+
+aktie aname[1499];
+aktie akuerz[1499];
 
 //    loadHash(aname,akuerz);
     string eingabe="";
@@ -219,7 +233,7 @@ int main()
         {
             cout<<"Was möchten Sie löschen?"<<endl;
             cin>>eingabe;
-            deletefunc(eingabe,aname,akuerz);
+            //deletefunc(eingabe,aname,akuerz);
         }if(eingabe =="save")
         {
             cout<<"Speichern der Hashtable \"FILENAME\": ";
