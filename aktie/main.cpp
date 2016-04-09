@@ -26,7 +26,7 @@ unsigned int hashd(const char* s)
 int recHashname(int hashw,aktie aname[])
 {
 
-      if(aname[hashw].name!="")
+    if(aname[hashw].name!="")
     {
         hashw=(hashw*hashw)%1499;
         hashw=recHashname(hashw,aname);
@@ -48,16 +48,16 @@ void add(string name, string kuerz,aktie aname[],aktie akuerz[])
 {
     int hname=hashd(name.c_str())%1499;
     int hkuerz=hashd(kuerz.c_str())%1499;
-cout<<"1"<<endl;
+
     hname=recHashname(hname,aname);
     hkuerz=recHashkuerz(hkuerz,akuerz);
-cout<<"2"<<endl;
+
     aname[hname].name=name;
     akuerz[hkuerz].kuerz=kuerz;
-cout<<"3"<<endl;
+
     aname[hname].kuerz=akuerz[hkuerz].kuerz;
     akuerz[hkuerz].name=aname[hname].name;
-cout<<"4"<<endl;
+
 }
 
 void loadHash(string eingabe,aktie aname[],aktie akuerz[])
@@ -67,34 +67,37 @@ void loadHash(string eingabe,aktie aname[],aktie akuerz[])
     int i=0;
     string zeile;
     f.open(eingabe+".txt", ios::in);// Öffne Datei aus Parameter
-    if(f){
-    while (!f.eof())          // Solange noch Daten vorliegen
+    if(f)
     {
-        getline(f, zeile);     // Lese eine Zeile
-        if(zeile.length()>1)
+        while (!f.eof())          // Solange noch Daten vorliegen
         {
-            /*pos=s.find(",");
-            //string to integger
-            istringstream(s.substr(0,pos))>>i;
-            pos1=s.find(",",pos+1);
-            aname[i]=s.substr(pos+1,(pos1-pos-1));
-            akuerz[i]=s.substr(pos1+1);*/
-            stringstream ss(zeile);
-            string cc;
-            getline(ss,cc,',');
-            istringstream(cc)>>i;
-            getline(ss,cc,',');
-            aname[i].name=cc;
-            getline(ss,cc,',');
-            akuerz[i].kuerz=cc;
-            aname[i].kuerz=akuerz[i].kuerz;
-            akuerz[i].name=aname[i].name;
-            cout<<aname[i].name<<","<<aname[i].kuerz<<endl;
+            getline(f, zeile);     // Lese eine Zeile
+            if(zeile.length()>1)
+            {
+                /*pos=s.find(",");
+                //string to integger
+                istringstream(s.substr(0,pos))>>i;
+                pos1=s.find(",",pos+1);
+                aname[i]=s.substr(pos+1,(pos1-pos-1));
+                akuerz[i]=s.substr(pos1+1);*/
+                stringstream ss(zeile);
+                string cc;
+                getline(ss,cc,',');
+                istringstream(cc)>>i;
+                getline(ss,cc,',');
+                aname[i].name=cc;
+                getline(ss,cc,',');
+                akuerz[i].kuerz=cc;
+                aname[i].kuerz=akuerz[i].kuerz;
+                akuerz[i].name=aname[i].name;
 
+
+            }
         }
     }
-    }else{
-    cout<<"Datei existiert nicht!"<<endl;
+    else
+    {
+        cout<<"Datei existiert nicht!"<<endl;
 
     }
     f.close();
@@ -107,9 +110,9 @@ void saveHash(string eingabe,aktie aname[],aktie akuerz[])
 
     while(i<1499)
     {
-        if(aname[i].name!=""||akuerz[i].kuerz!=""){
+        if(aname[i].name!=""||akuerz[i].kuerz!="")
+        {
             f<<i<<","<< aname[i].name <<","<< akuerz[i].kuerz<<endl;
-            cout<<i<<","<<aname[i].name<<","<<akuerz[i].kuerz<<endl;
         }
         i++;
     }
@@ -118,7 +121,6 @@ void saveHash(string eingabe,aktie aname[],aktie akuerz[])
 
 void import(string eingabe,string kurz)
 {
-
     ifstream f;  // Datei-Handle
     string s;
     int laenge=1;
@@ -136,38 +138,57 @@ int search(string eingabe,aktie aname[],aktie akuerz[])
 {
     int hname=hashd(eingabe.c_str())%1499;
     int hkuerz=hashd(eingabe.c_str())%1499;
-    int werte[1499]={0};
+    int werte[1499]= {0};
 
     //string werte="";
 
-    if(aname[hname].name == eingabe){
-        return 1;
-    }else{
-        while(aname[hname].name != eingabe){
-         //   werte += hname + ",";
+    if(aname[hname].name == eingabe)
+    {
+
+        return hname*10;
+    }
+    else
+    {
+        while(aname[hname].name != eingabe)
+        {
+            //   werte += hname + ",";
             werte[hname]=1;
             hname = (hname*hname) % 1499;
-           // if(werte.find(hname) != -1){
-           if(werte[hkuerz]){
+            // if(werte.find(hname) != -1){
+            if(aname[hname].name == eingabe)
+                return hname*10;
+            if(werte[hkuerz])
+            {
                 break;
             }
         }
-    }
-    if(akuerz[hkuerz].kuerz == eingabe){
-        return 1;
-    }else{
-        while(akuerz[hkuerz].kuerz != eingabe){
-           // werte += hkuerz + ",";
-           werte[hkuerz]=1;
-            hkuerz = (hkuerz*hkuerz) % 1499;
-           // if(werte.find(hkuerz) != -1){
-           if(werte[hkuerz]){
-                break;
-            }
-        }
-        return 0;
     }
 
+    if(akuerz[hkuerz].kuerz == eingabe)
+    {
+
+
+        return hkuerz*10+1;
+
+    }
+    else
+    {
+        while(akuerz[hkuerz].kuerz != eingabe)
+        {
+            // werte += hkuerz + ",";
+            werte[hkuerz]=1;
+            hkuerz = (hkuerz*hkuerz) % 1499;
+            // if(werte.find(hkuerz) != -1){
+            if(akuerz[hkuerz].kuerz == eingabe)
+                return hkuerz*10+1;
+            if(werte[hkuerz])
+            {
+                break;
+            }
+        }
+
+    }
+    return 0;
 }
 
 void deletefunc(string eingabe,string aname[],string akuerz[])
@@ -189,13 +210,52 @@ void deletefunc(string eingabe,string aname[],string akuerz[])
 //
 //    }
 }
+void showData(string eingabe,aktie aname[],aktie akuerz[])
+{
+    int hasw=search(eingabe,aname,akuerz);
+    if(!((hasw)%10))
+    {
+        hasw/=10;
+        //Name
+
+        ifstream f;  // Datei-Handle
+        string s;
+        f.open(aname[hasw].kuerz+".csv", ios::in); // Öffne Datei aus Parameter
+        if(f){
+        getline(f, s);    // Lese eine Zeile
+        cout << s << endl;    // Zeige sie auf dem Bildschirm
+        getline(f, s);    // Lese eine Zeile
+        cout << s << endl;    // Zeige sie auf dem Bildschirm
+        }else
+        cout<<"Es existieren keine Kursdaten für diese Eingabe!"<<endl;
+        f.close();
+    }
+    else
+    {
+        //Kürzel
+        hasw/=10;
+        ifstream f;  // Datei-Handle
+        string s;
+        f.open(akuerz[hasw].kuerz+".csv", ios::in); // Öffne Datei aus Parameter
+        if(f){
+        getline(f, s);    // Lese eine Zeile
+        cout << s << endl;    // Zeige sie auf dem Bildschirm
+        getline(f, s);    // Lese eine Zeile
+        cout << s << endl;    // Zeige sie auf dem Bildschirm
+
+        }else
+        cout<<"Es existieren keine Kursdaten für diese Eingabe!"<<endl;
+        f.close();
+    }
+}
+
 int main()
 {
 //    string aname[1499]="NULL";
 //    string akuerz[1499]="NULL";
 
-aktie aname[1499];
-aktie akuerz[1499];
+    aktie aname[1499];
+    aktie akuerz[1499];
 
 //    loadHash(aname,akuerz);
     string eingabe="";
@@ -219,14 +279,7 @@ aktie akuerz[1499];
         {
             cout<<"Was suchen Sie?"<<endl;
             cin>>eingabe;
-            if(search(eingabe,aname,akuerz))
-            {
-                cout<<"Gesuchte Inhalt wurde gefunden!"<<endl;
-            }
-            else
-            {
-                cout<<"Gesuchte Inhalt wurde NICHT gefunden!"<<endl;
-            }
+            showData(eingabe,aname,akuerz);
             //search(eingabe)
         }
         if(eingabe =="delete")
@@ -234,12 +287,14 @@ aktie akuerz[1499];
             cout<<"Was möchten Sie löschen?"<<endl;
             cin>>eingabe;
             //deletefunc(eingabe,aname,akuerz);
-        }if(eingabe =="save")
+        }
+        if(eingabe =="save")
         {
             cout<<"Speichern der Hashtable \"FILENAME\": ";
             cin>>eingabe;
             saveHash(eingabe,aname,akuerz);
-        }if(eingabe=="load")
+        }
+        if(eingabe=="load")
         {
             cout<<"Laden der Hashtable \"FILENAME\": ";
             cin>>eingabe;
