@@ -88,8 +88,11 @@ void loadHash(string eingabe,aktie aname[],aktie akuerz[])
                 aname[i].name=cc;
                 getline(ss,cc,',');
                 akuerz[i].kuerz=cc;
-                aname[i].kuerz=akuerz[i].kuerz;
-                akuerz[i].name=aname[i].name;
+
+
+                cout<<aname[i].name<<" : "<<aname[i].kuerz<<"x"<<endl;
+                cout<<akuerz[i].name<<" : "<<akuerz[i].kuerz<<"x"<<endl;
+
 
 
             }
@@ -195,69 +198,105 @@ void deletefunc(string eingabe,aktie aname[],aktie akuerz[])
 {
     int x;
     x = search(eingabe, aname, akuerz);
+    cout<<x<<endl;
     int y;
     string s;
-    if(aname[x].name == eingabe){
+    if(!(x%10))
+    {
+
+        x/=10;
         s = aname[x].kuerz;
+        cout<<s<<endl;
         y = hashd(s.c_str())%1499;
-        //cout<<y<<endl;
-        if(akuerz[y].name == eingabe){
+
+        if(akuerz[y].name == eingabe)
+        {
+             cout<<"name"<<endl;
             aname[x].name = "";
             aname[x].kuerz = "";
             akuerz[y].name = "";
             akuerz[y].kuerz = "";
         }
 
-    }
-    if(akuerz[x].kuerz == eingabe){
+
+    }else
+    {
+        x/=10;
+        cout<<x<<endl;
         s = akuerz[x].name;
+        cout<<s<<endl;
         y = hashd(s.c_str())%1499;
         //cout<<y<<endl;
-        if(aname[y].kuerz == eingabe){
-            aname[x].name = "";
-            aname[x].kuerz = "";
-            akuerz[y].name = "";
-            akuerz[y].kuerz = "";
+        if(aname[y].kuerz == eingabe)
+        {
+            cout<<"kurz"<<endl;
+            akuerz[x].name = "";
+            akuerz[x].kuerz = "";
+            aname[y].name = "";
+            aname[y].kuerz = "";
         }
+
     }
 }
 void showData(string eingabe,aktie aname[],aktie akuerz[])
 {
     int hasw=search(eingabe,aname,akuerz);
-    if(!((hasw)%10))
+    if((hasw/10))
     {
-        hasw/=10;
-        //Name
+        if(!((hasw)%10))
+        {
+            hasw/=10;
+            //Name
 
-        ifstream f;  // Datei-Handle
-        string s;
-        f.open(aname[hasw].kuerz+".csv", ios::in); // Öffne Datei aus Parameter
-        if(f){
-        getline(f, s);    // Lese eine Zeile
-        cout << s << endl;    // Zeige sie auf dem Bildschirm
-        getline(f, s);    // Lese eine Zeile
-        cout << s << endl;    // Zeige sie auf dem Bildschirm
-        }else
-        cout<<"Es existieren keine Kursdaten für diese Eingabe!"<<endl;
-        f.close();
+            ifstream f;  // Datei-Handle
+            string s;
+            f.open(aname[hasw].kuerz+".csv", ios::in); // Öffne Datei aus Parameter
+            if(f)
+            {
+                getline(f, s);    // Lese eine Zeile
+                cout << s << endl;    // Zeige sie auf dem Bildschirm
+                getline(f, s);    // Lese eine Zeile
+                cout << s << endl;    // Zeige sie auf dem Bildschirm
+            }
+            else
+                cout<<"Es existieren keine Kursdaten für diese Eingabe!"<<endl;
+            f.close();
+        }
+        else
+        {
+            //Kürzel
+            hasw/=10;
+            ifstream f;  // Datei-Handle
+            string s;
+            f.open(akuerz[hasw].kuerz+".csv", ios::in); // Öffne Datei aus Parameter
+            if(f)
+            {
+                getline(f, s);    // Lese eine Zeile
+                cout << s << endl;    // Zeige sie auf dem Bildschirm
+                getline(f, s);    // Lese eine Zeile
+                cout << s << endl;    // Zeige sie auf dem Bildschirm
+
+            }
+            else
+                cout<<"Es existieren keine Kursdaten für diese Eingabe!"<<endl;
+            f.close();
+        }
     }
-    else
+
+}
+
+void ls(aktie aname[],aktie akuerz[])
+{
+    int i=0;
+    while(i<1499)
     {
-        //Kürzel
-        hasw/=10;
-        ifstream f;  // Datei-Handle
-        string s;
-        f.open(akuerz[hasw].kuerz+".csv", ios::in); // Öffne Datei aus Parameter
-        if(f){
-        getline(f, s);    // Lese eine Zeile
-        cout << s << endl;    // Zeige sie auf dem Bildschirm
-        getline(f, s);    // Lese eine Zeile
-        cout << s << endl;    // Zeige sie auf dem Bildschirm
-
-        }else
-        cout<<"Es existieren keine Kursdaten für diese Eingabe!"<<endl;
-        f.close();
+        if(aname[i].name!=""||akuerz[i].kuerz!="")
+        {
+            cout<<i<<","<< aname[i].name <<","<< akuerz[i].kuerz<<endl;
+        }
+        i++;
     }
+
 }
 
 int main()
@@ -272,12 +311,12 @@ int main()
     string eingabe="";
     string name, kurz;
 
-
     do
     {
-
-
-
+        if(eingabe=="ls")
+        {
+            ls(aname,akuerz);
+        }
         if(eingabe == "add")
         {
             cout<<"Name: ";
@@ -297,7 +336,7 @@ int main()
         {
             cout<<"Was möchten Sie löschen?"<<endl;
             cin>>eingabe;
-            //deletefunc(eingabe,aname,akuerz);
+            deletefunc(eingabe,aname,akuerz);
         }
         if(eingabe =="save")
         {
@@ -310,6 +349,7 @@ int main()
             cout<<"Laden der Hashtable \"FILENAME\": ";
             cin>>eingabe;
             loadHash(eingabe,aname,akuerz);
+           // add("micro","msft",aname,akuerz);
         }
 
         cout<<"What do you want to do?"<<endl;
