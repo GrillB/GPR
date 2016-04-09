@@ -6,6 +6,11 @@
 
 using namespace std;
 
+struct aktie
+{
+    string name;
+    string kuerz;
+};
 
 unsigned int hashd(const char* s)
 {
@@ -53,7 +58,6 @@ void loadHash(string eingabe,string aname[],string akuerz[])
     //string s;
     int i=0;
     string zeile;
-    size_t pos,pos1;
     f.open(eingabe+".txt", ios::in);// Öffne Datei aus Parameter
     if(f){
     while (!f.eof())          // Solange noch Daten vorliegen
@@ -101,37 +105,39 @@ void saveHash(string eingabe,string aname[],string akuerz[])
     f.close();
 }
 
-void import(string s, string kurz)
+void import(string eingabe,string kurz)
 {
 
     ifstream f;  // Datei-Handle
-    //string s;
+    string s;
     int laenge=1;
     f.open("msft.csv", ios::in); // Öffne Datei aus Parameter
     while (!f.eof()&&laenge<31)          // Solange noch Daten vorliegen
     {
-        getline(f, s);     // Lese eine Zeile
+        getline(f, s);    // Lese eine Zeile
         cout << s << endl;    // Zeige sie auf dem Bildschirm
         laenge++;
     }
     f.close();
-
-
 }
 
 int search(string eingabe,string aname[],string akuerz[])
 {
     int hname=hashd(eingabe.c_str())%1499;
     int hkuerz=hashd(eingabe.c_str())%1499;
-    string werte="";
+    int werte[1499]={0};
+
+    //string werte="";
 
     if(aname[hname] == eingabe){
         return 1;
     }else{
         while(aname[hname] != eingabe){
-            werte += hname + ",";
+         //   werte += hname + ",";
+            werte[hname]=1;
             hname = (hname*hname) % 1499;
-            if(werte.find(hname) != -1){
+           // if(werte.find(hname) != -1){
+           if(werte[hkuerz]){
                 break;
             }
         }
@@ -140,9 +146,11 @@ int search(string eingabe,string aname[],string akuerz[])
         return 1;
     }else{
         while(akuerz[hkuerz] != eingabe){
-            werte += hkuerz + ",";
+           // werte += hkuerz + ",";
+           werte[hkuerz]=1;
             hkuerz = (hkuerz*hkuerz) % 1499;
-            if(werte.find(hkuerz) != -1){
+           // if(werte.find(hkuerz) != -1){
+           if(werte[hkuerz]){
                 break;
             }
         }
@@ -150,28 +158,25 @@ int search(string eingabe,string aname[],string akuerz[])
     }
 
 }
+
 void deletefunc(string eingabe,string aname[],string akuerz[])
 {
-    size_t found, found2;
-    for(int i = 0; i<1499; i++)
-    {
-        found = aname[i].find(eingabe);
-        found2 = akuerz[i].find(eingabe);
-        if(found != -1)
-        {
-            cout<< "Name gefunden"<<endl;
-            cout<< i <<endl;
-            cout<< aname[i] << "wird gelöscht" <<endl;
-            aname[i] = "NULL";
-        }
-        if(found2 != -1)
-        {
-            cout<< "Kuerzel gefunden"<<endl;
-            cout<< i <<endl;
-            cout<< akuerz[i] << "wird gelöscht" <<endl;
-            akuerz[i] = "NULL";
-        }
-    }
+//    size_t found, found2;
+//    int hashw= search(eingabe, aname, akuerz);
+//    if(hashw){
+//
+//
+//            cout<< "Name gefunden"<<endl;
+//            cout<< hashw <<endl;
+//            cout<< aname[i] << "wird gelöscht" <<endl;
+//            aname[i] = "NULL";
+//
+//            cout<< "Kuerzel gefunden"<<endl;
+//            cout<< i <<endl;
+//            cout<< akuerz[i] << "wird gelöscht" <<endl;
+//            akuerz[i] = "NULL";
+//
+//    }
 }
 int main()
 {
