@@ -80,18 +80,24 @@ void loadHash(string eingabe,aktie aname[],aktie akuerz[])
                 pos1=s.find(",",pos+1);
                 aname[i]=s.substr(pos+1,(pos1-pos-1));
                 akuerz[i]=s.substr(pos1+1);*/
+                // f<<i<<","<< aname[i].name <<","<< aname[i].kuerz<<","<< akuerz[i].name <<","<< aname[i].kuerz<<endl;
                 stringstream ss(zeile);
                 string cc;
                 getline(ss,cc,',');
                 istringstream(cc)>>i;
+
                 getline(ss,cc,',');
                 aname[i].name=cc;
                 getline(ss,cc,',');
+                aname[i].kuerz=cc;
+
+                getline(ss,cc,',');
+                akuerz[i].name=cc;
+                getline(ss,cc,',');
                 akuerz[i].kuerz=cc;
 
-
-                cout<<aname[i].name<<" : "<<aname[i].kuerz<<"x"<<endl;
-                cout<<akuerz[i].name<<" : "<<akuerz[i].kuerz<<"x"<<endl;
+                cout<<aname[i].name<<" : "<<aname[i].kuerz<<endl;
+                cout<<akuerz[i].name<<" : "<<akuerz[i].kuerz<<endl;
 
 
 
@@ -115,7 +121,8 @@ void saveHash(string eingabe,aktie aname[],aktie akuerz[])
     {
         if(aname[i].name!=""||akuerz[i].kuerz!="")
         {
-            f<<i<<","<< aname[i].name <<","<< akuerz[i].kuerz<<endl;
+            //f<<i<<","<< aname[i].name <<","<< akuerz[i].kuerz<<endl;
+            f<<i<<","<< aname[i].name <<","<< aname[i].kuerz<<","<< akuerz[i].name <<","<< akuerz[i].kuerz<<endl;
         }
         i++;
     }
@@ -169,10 +176,7 @@ int search(string eingabe,aktie aname[],aktie akuerz[])
 
     if(akuerz[hkuerz].kuerz == eingabe)
     {
-
-
         return hkuerz*10+1;
-
     }
     else
     {
