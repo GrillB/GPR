@@ -1,0 +1,104 @@
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+void printField(char myField[],bool newField)
+{
+    for(int i=0; i<5; i++)
+    {
+
+        for(int j=0; j<8; j++)
+        {
+            if(newField)
+                myField[i*8+j]='.';
+            cout<<myField[i*8+j];
+
+
+        }
+        cout<<i+1<<endl;
+
+    }
+    cout<<"12345678"<<endl;
+}
+
+bool fillField(char myField[],int i,bool spieler)
+{
+    for(int j=4; j>=0; j--)
+    {
+
+        if(myField[j*8+i]=='.')
+        {
+            if(spieler)
+            {
+                myField[j*8+i]='A';
+
+            }
+            else
+            {
+                myField[j*8+i]='B';
+
+            }
+              return true;
+        }
+    }
+    return false;
+
+}
+
+bool checkWin()
+{
+
+}
+
+int main()
+{
+    string eingabe;
+    cout << "Player or Computer!"<<"\n"<<"Player(p)/Computer(c): " << endl;
+    cin>>eingabe;
+    char myField[40];
+    printField(myField,true);
+    bool spieler=false;
+    if(eingabe=="p")
+    {
+        //Eine fuktion Fillfield wurde erstellt aber es ist nicht ganz fertig
+        while(true)
+        {
+
+            int zahl;
+            if(!spieler)
+            {
+                cout<<"Player A: ";
+                cin>>zahl;
+                zahl--;
+                if(fillField(myField,zahl,true))
+                spieler= true;
+                else
+                    cout<<"Nochmal !!!"<<endl;
+
+            }
+            else
+            {
+                cout<<"Player B: ";
+                cin>>zahl;
+                zahl--;
+                if(fillField(myField,zahl,false))
+                spieler= false;
+                else
+                   cout<<"Nochmal !!!"<<endl;
+            }
+            system("cls");
+            printField(myField,false);
+        }
+    }
+    else if(eingabe=="c")
+    {
+
+    }
+    else
+    {
+
+    }
+
+    return 0;
+}
